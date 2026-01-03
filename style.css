@@ -1,0 +1,67 @@
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  margin: 0;
+  padding: 10px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+canvas {
+  background: black;
+  border: 2px solid white;
+  margin: 10px auto;
+  display: block;
+}
+
+#word {
+  font-size: 32px;
+  letter-spacing: 10px;
+  margin: 15px 0;
+}
+
+#letters button {
+  margin: 4px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button {
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background: #555;
+}
+
+/* 📱 Mobile */
+@media (max-width: 600px) {
+  canvas {
+    width: 250px;
+    height: 250px;
+  }
+
+  #letters button {
+    padding: 14px;
+    font-size: 18px;
+  }
+
+  #word {
+    font-size: 26px;
+    letter-spacing: 8px;
+  }
+}
