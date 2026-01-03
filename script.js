@@ -35,9 +35,10 @@ const loseSound = document.getElementById("loseSound");
 // ---------------- GAME STATE ----------------
 let selectedWord = "";
 let guessedLetters = [];
-let lives = 6;
+let maxLives = 6;
+let livesLeft = 6;
 
-// ---------------- DRAW HANGMAN ----------------
+// ---------------- DRAWING ----------------
 function drawBase() {
   ctx.strokeStyle = "white";
   ctx.lineWidth = 2;
@@ -84,12 +85,13 @@ function startGame() {
   guessedLetters = [];
 
   const diff = difficultyEl.value;
-  lives = diff === "easy" ? 8 : diff === "medium" ? 6 : 4;
+  maxLives = diff === "easy" ? 8 : diff === "medium" ? 6 : 4;
+  livesLeft = maxLives;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBase();
 
-  livesEl.textContent = `Lives: ${lives}`;
+  livesEl.textContent = `Lives: ${livesLeft}`;
   messageEl.textContent = "Guess a letter";
 
   createButtons();
@@ -115,9 +117,9 @@ function guessLetter(letter, button) {
     messageEl.textContent = "Correct 👍";
   } else {
     wrongSound.play();
-    drawSteps[drawSteps.length - lives]();
-    lives--;
-    livesEl.textContent = `Lives: ${lives}`;
+    drawSteps[maxLives - livesLeft]();
+    livesLeft--;
+    livesEl.textContent = `Lives: ${livesLeft}`;
     messageEl.textContent = "Wrong ❌";
   }
 
@@ -133,7 +135,7 @@ function updateWord() {
 }
 
 function checkGameOver() {
-  if (lives === 0) {
+  if (livesLeft === 0) {
     loseSound.play();
     messageEl.textContent = `Game Over ☠️ Word was "${selectedWord}"`;
     disableAll();
@@ -153,7 +155,27 @@ function restartGame() {
   startGame();
 }
 
-// Keyboard support
+// ---------------- HINT ----------------
+function giveHint() {
+  if (livesLeft <= 1) {
+    messageEl.textContent = "Not enough lives for hint!";
+    return;
+  }
+
+  const hidden = selectedWord.split("").filter(l => !guessedLetters.includes(l));
+  if (hidden.length === 0) return;
+
+  const hintLetter = hidden[Math.floor(Math.random() * hidden.length)];
+  guessedLetters.push(hintLetter);
+
+  livesLeft--;
+  livesEl.textContent = `Lives: ${livesLeft}`;
+  updateWord();
+
+  messageEl.textContent = `Hint used! "${hintLetter.toUpperCase()}" revealed`;
+}
+
+// ---------------- KEYBOARD SUPPORT ----------------
 document.addEventListener("keydown", e => {
   const letter = e.key.toLowerCase();
   if (letter < "a" || letter > "z") return;

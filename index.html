@@ -18,13 +18,15 @@
 
   <canvas id="canvas" width="300" height="300"></canvas>
 
-  <p id="word">_ _ _ _</p>
+  <p id="word">_ _ _</p>
   <p id="message">Guess a letter</p>
 
   <div id="letters"></div>
 
   <p id="lives">Lives: 6</p>
+
   <button onclick="restartGame()">Restart</button>
+  <button onclick="giveHint()">Hint (-1 life)</button>
 
   <!-- Sounds -->
   <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>

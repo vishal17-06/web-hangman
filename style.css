@@ -20,8 +20,8 @@ select {
 canvas {
   background: black;
   border: 2px solid white;
-  margin: 10px auto;
   display: block;
+  margin: 10px auto;
 }
 
 #word {
@@ -38,10 +38,13 @@ canvas {
 }
 
 button {
+  margin: 6px;
+  padding: 10px 16px;
   background: #333;
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 button:disabled {
